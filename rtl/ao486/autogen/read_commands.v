@@ -294,6 +294,7 @@ wire cond_255 = rd_cmd == `CMD_debug_reg && rd_cmdex == `CMDEX_debug_reg_MOV_loa
 wire cond_256 = rd_cmd == `CMD_XLAT;
 wire cond_257 = rd_cmd == `CMD_AAA || rd_cmd == `CMD_AAS || rd_cmd == `CMD_DAA || rd_cmd == `CMD_DAS;
 wire cond_258 = { rd_cmd[6:1], 1'd0 } == `CMD_BSx;
+wire cond_259 = rd_cmd == `CMD_RDTSC;
 //======================================================== saves
 //======================================================== always
 //======================================================== sets
@@ -468,6 +469,7 @@ assign rd_req_eax =
     (cond_226)? (`TRUE) :
     (cond_256)? (`TRUE) :
     (cond_257)? (`TRUE) :
+    (cond_259)? (`TRUE) :
     1'd0;
 assign address_stack_for_iret_last =
     (cond_98 && cond_101)? (`TRUE) :
@@ -800,6 +802,7 @@ assign rd_dst_is_rm =
 assign rd_req_edx =
     (cond_172)? (`TRUE) :
     (cond_221)? ( rd_cmd == `CMD_CWD) :
+    (cond_259)? (`TRUE) :
     1'd0;
 assign rd_src_is_io =
     (cond_173 && ~cond_174 && cond_175)? (`TRUE) :
@@ -1162,6 +1165,7 @@ assign rd_waiting =
     (cond_258 && cond_1 && cond_8)? (`TRUE) :
     (cond_258 && cond_3 && cond_9)? (`TRUE) :
     (cond_258 && cond_3 && ~cond_9 && cond_5)? (`TRUE) :
+    (cond_259 && cond_68)? (`TRUE) :
     1'd0;
 assign address_ea_buffer =
     (cond_11 && cond_12)? (`TRUE) :
@@ -1371,6 +1375,7 @@ assign rd_dst_is_edx_eax =
     (cond_107)? (`TRUE) :
     (cond_135)? (    ~(rd_decoder[3])) :
     (cond_150)? (`TRUE) :
+    (cond_259)? (`TRUE) :
     1'd0;
 assign rd_src_is_modregrm_imm =
     (cond_76)? (  rd_cmdex == `CMDEX_BTx_modregrm_imm) :
@@ -1394,6 +1399,7 @@ assign rd_req_edx_eax =
     (cond_107)? ( rd_decoder[0]) :
     (cond_135)? (      ~(rd_decoder[3]) && rd_decoder[0]) :
     (cond_150)? ( rd_decoder[0]) :
+    (cond_259)? (`TRUE) :
     1'd0;
 assign address_stack_for_iret_third =
     (cond_98 && cond_99)? (`TRUE) :

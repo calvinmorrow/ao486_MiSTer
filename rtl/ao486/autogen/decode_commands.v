@@ -143,6 +143,7 @@ wire cond_140 = dec_ready_one && decoder[7:0] == 8'h27;
 wire cond_141 = dec_ready_one && decoder[7:0] == 8'h2F;
 wire cond_142 = dec_ready_2byte_modregrm && decoder[7:0] == 8'hBC;
 wire cond_143 = dec_ready_2byte_modregrm && decoder[7:0] == 8'hBD;
+wire cond_144 = dec_ready_2byte_one && decoder[7:0] == 8'h31;
 //======================================================== saves
 //======================================================== always
 //======================================================== sets
@@ -269,6 +270,7 @@ assign dec_cmd =
     (cond_141 && ~cond_4)? ( `CMD_DAS) :
     (cond_142 && ~cond_4)? ( `CMD_BSF) :
     (cond_143 && ~cond_4)? ( `CMD_BSR) :
+    (cond_144 && ~cond_4)? ( `CMD_RDTSC) :
     7'd0;
 assign dec_is_complex =
     (cond_0 && ~cond_1)? (`TRUE) :
@@ -385,6 +387,7 @@ assign consume_one =
     (cond_139 && ~cond_4)? (`TRUE) :
     (cond_140 && ~cond_4)? (`TRUE) :
     (cond_141 && ~cond_4)? (`TRUE) :
+    (cond_144 && ~cond_4)? (`TRUE) :
     1'd0;
 assign consume_one_one =
     (cond_3 && ~cond_4)? (`TRUE) :
@@ -516,6 +519,7 @@ assign exception_ud =
     (cond_141 && cond_4)? (`TRUE) :
     (cond_142 && cond_4)? (`TRUE) :
     (cond_143 && cond_4)? (`TRUE) :
+    (cond_144 && cond_4)? (`TRUE) :
     1'd0;
 assign consume_one_imm =
     (cond_17 && ~cond_4 && cond_19)? (`TRUE) :

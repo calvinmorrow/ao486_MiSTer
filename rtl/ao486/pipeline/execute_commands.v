@@ -103,6 +103,7 @@ module execute_commands(
     input       [31:0]  tr_limit,
     input       [63:0]  tr_cache,
     input       [63:0]  ss_cache,
+    input       [63:0]  tsc,
     
     input       [15:0]  idtr_limit,
     input       [31:0]  idtr_base,

@@ -233,6 +233,7 @@ module write(
     output      [15:0]  ldtr,
     output      [15:0]  tr,
 
+    output      [63:0]  tsc,
     output      [63:0]  es_cache,
     output      [63:0]  ds_cache,
     output      [63:0]  ss_cache,
@@ -1096,6 +1097,7 @@ write_commands write_commands_inst(
     .cs                            (cs),                            //input [15:0]
     .ldtr                          (ldtr),                          //input [15:0]
     .tr                            (tr),                            //input [15:0]
+    .tsc                           (tsc),                           //input [63:0]
     .es_cache                      (es_cache),                      //input [63:0]
     .ds_cache                      (ds_cache),                      //input [63:0]
     .ss_cache                      (ss_cache),                      //input [63:0]
@@ -1411,6 +1413,7 @@ write_register write_register_inst(
     .cs                  (cs),                  //output [15:0]
     .ldtr                (ldtr),                //output [15:0]
     .tr                  (tr),                  //output [15:0]
+    .tsc                 (tsc),                 //output [63:0]
     .es_cache            (es_cache),            //output [63:0]
     .ds_cache            (ds_cache),            //output [63:0]
     .ss_cache            (ss_cache),            //output [63:0]

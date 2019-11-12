@@ -93,9 +93,9 @@ assign exception_ud_invalid =
     (dec_ready_2byte_one && (
         { decoder[7:1], 1'b0 } == 8'hA6 || decoder[7:0] == 8'hAA || decoder[7:0] == 8'hAE ||
         { decoder[7:1], 1'b0 } == 8'hB8 || (decoder[7:4] == 4'hC && decoder[3] == 1'b0 && decoder[2:1] != 2'b00) ||
-        (decoder[7:4] >= 4'hD) || (decoder[7:4] >= 4'h3 && decoder[7:4] <= 4'h7) || decoder[7:4] == 4'h1 ||
+        (decoder[7:4] >= 4'hD) || (decoder[7:0] >= 8'h32 && decoder[7:4] <= 4'h7) || decoder[7:4] == 4'h1 ||
         (decoder[7:4] == 4'h2 && decoder[3:0] >= 4'h4) || { decoder[7:1], 1'b0 } == 8'h04 || decoder[7:0] == 8'h07 ||
-        (decoder[7:4] == 4'd0 && decoder[3:0] >= 4'hA) ));
+        (decoder[7:4] == 4'd0 && decoder[3:0] >= 4'hA)));
 
 
 //------------------------------------------------------------------------------

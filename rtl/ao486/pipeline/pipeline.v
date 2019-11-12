@@ -376,6 +376,7 @@ wire [15:0] gdtr_limit;
 wire [31:0] idtr_base;
 wire [15:0] idtr_limit;
 
+wire [63:0] tsc;
 wire        es_cache_valid;
 wire [63:0] es_cache;
 wire        cs_cache_valid;
@@ -715,6 +716,7 @@ read read_inst(
     .gdtr_base                     (gdtr_base),                     //input [31:0]
     .idtr_base                     (idtr_base),                     //input [31:0]
     
+    .tsc                           (tsc),                           //input [63:0]
     .es_cache_valid                (es_cache_valid),                //input
     .es_cache                      (es_cache),                      //input [63:0]
     .cs_cache_valid                (cs_cache_valid),                //input
@@ -918,6 +920,7 @@ execute execute_inst(
     .ebp                           (ebp),                           //input [31:0]
     .esp                           (esp),                           //input [31:0]
     
+    .tsc                           (tsc),                           //input [63:0]
     .cs_cache                      (cs_cache),                      //input [63:0]
     .tr_cache                      (tr_cache),                      //input [63:0]
     .ss_cache                      (ss_cache),                      //input [63:0]
@@ -1352,6 +1355,7 @@ write write_inst(
     .ldtr                (ldtr),                //output [15:0]
     .tr                  (tr),                  //output [15:0]
     
+    .tsc                 (tsc),                 //output [63:0]
     .es_cache            (es_cache),            //output [63:0]
     .ds_cache            (ds_cache),            //output [63:0]
     .ss_cache            (ss_cache),            //output [63:0]

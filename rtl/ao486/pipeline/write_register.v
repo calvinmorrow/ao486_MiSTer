@@ -275,6 +275,7 @@ module write_register(
     output reg  [15:0]  ldtr,
     output reg  [15:0]  tr,
 
+    output reg  [63:0]  tsc,
     output reg  [63:0]  es_cache,
     output reg  [63:0]  ds_cache,
     output reg  [63:0]  ss_cache,
@@ -432,6 +433,8 @@ always @(posedge clk) begin if(rst_n == 1'b0) cr0_cd <= `STARTUP_CR0_CD; else cr
 always @(posedge clk) begin if(rst_n == 1'b0) cr0_pg <= `STARTUP_CR0_PG; else cr0_pg <= cr0_pg_to_reg; end
 
 always @(posedge clk) begin if(rst_n == 1'b0) cr3    <= `STARTUP_CR3;  else cr3    <= cr3_to_reg;    end
+
+always @(posedge clk) begin if(rst_n == 1'b0) tsc    <= `STARTUP_TSC;  else tsc <= tsc + 1; end
 
 always @(posedge clk) begin
     if(rst_n == 1'b0)       cr2 <= `STARTUP_CR2;

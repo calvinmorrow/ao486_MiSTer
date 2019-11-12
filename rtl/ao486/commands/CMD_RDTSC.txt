@@ -1,0 +1,26 @@
+<defines>
+`define CMD_RDTSC       #AUTOGEN_NEXT_CMD
+</defines>
+
+<decode>
+dec_ready_2byte_one && decoder[7:0] == 8'h31
+`CMD_RDTSC
+</decode>
+
+<read>
+IF(rd_cmd == `CMD_RDTSC);
+
+    SET(rd_dst_is_edx_eax);
+    SET(rd_req_edx_eax);
+    SET(rd_req_eax);
+
+    IF(rd_mutex_busy_eax || rd_mutex_busy_edx); SET(rd_waiting); ENDIF();
+ENDIF();
+</read>
+
+<write>
+IF(wr_cmd == `CMD_RDTSC);
+    SAVE(eax, tsc[31:0]);
+    SAVE(edx, tsc[63:32]);
+ENDIF();
+</write>

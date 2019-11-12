@@ -375,6 +375,7 @@ module write_commands(
     input       [15:0]  ldtr,
     input       [15:0]  tr,
 
+    input       [63:0]  tsc,
     input       [63:0]  es_cache,
     input       [63:0]  ds_cache,
     input       [63:0]  ss_cache,

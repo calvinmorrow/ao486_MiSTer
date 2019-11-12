@@ -298,6 +298,7 @@ wire cond_271 = wr_cmd == `CMD_XLAT;
 wire cond_272 = wr_cmd == `CMD_AAA || wr_cmd == `CMD_AAS;
 wire cond_273 = wr_cmd == `CMD_DAA || wr_cmd == `CMD_DAS;
 wire cond_274 = { wr_cmd[6:1], 1'd0 } == `CMD_BSx;
+wire cond_275 = wr_cmd == `CMD_RDTSC;
 //======================================================== saves
 assign gdtr_limit_to_reg =
     (cond_119 && cond_121 && cond_120)? ( result2[15:0]) :
@@ -572,6 +573,7 @@ assign eax_to_reg =
     (cond_263 && cond_264)? ( { wr_operand_16bit? eax[31:16] : exe_buffer[31:16],           exe_buffer[15:0] }) :
     (cond_272)? ( { eax[31:16], result[15:0] }) :
     (cond_273)? ( { eax[31:16], result[15:0] }) :
+    (cond_275)? ( tsc[31:0]) :
     eax;
 assign dr6_bs_to_reg =
     (cond_266 && cond_268)? (     result2[14]) :
@@ -663,6 +665,7 @@ assign edx_to_reg =
     (cond_215 && ~cond_83)? ( { edx[31:16], {16{eax[15]}} }) :
     (cond_240)? ( (glob_descriptor[`DESC_BITS_TYPE] <= 4'd3)? { 16'hFFFF, exe_buffer_shifted[287:272] } : exe_buffer_shifted[303:272]) :
     (cond_263 && cond_264)? ( { wr_operand_16bit? edx[31:16] : exe_buffer_shifted[63:48],   exe_buffer_shifted[47:32] }) :
+    (cond_275)? ( tsc[63:32]) :
     edx;
 assign vmflag_to_reg =
     (cond_62)? ( `FALSE) :

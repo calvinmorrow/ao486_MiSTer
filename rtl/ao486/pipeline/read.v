@@ -60,6 +60,7 @@ module read(
     input       [31:0]  gdtr_base,
     input       [31:0]  idtr_base,
     
+    input       [63:0]  tsc,
     input               es_cache_valid,
     input       [63:0]  es_cache,
     

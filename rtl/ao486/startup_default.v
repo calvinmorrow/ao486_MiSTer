@@ -47,6 +47,8 @@
 `define STARTUP_CR3 32'd0
 `define STARTUP_CR2 32'd0
 
+`define STARTUP_TSC 64'd0
+
 `define STARTUP_CFLAG  1'b0
 `define STARTUP_PFLAG  1'b0
 `define STARTUP_AFLAG  1'b0

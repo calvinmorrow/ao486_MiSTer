@@ -39,6 +39,7 @@ module execute(
     input       [31:0]  ebp,
     input       [31:0]  esp,
     
+    input       [63:0]  tsc,
     input       [63:0]  cs_cache,
     input       [63:0]  tr_cache,
     input       [63:0]  ss_cache,
@@ -644,6 +645,7 @@ execute_commands execute_commands_inst(
     .tr_limit                           (tr_limit),                         //input [31:0]
     .tr_cache                           (tr_cache),                         //input [63:0]
     .ss_cache                           (ss_cache),                         //input [63:0]
+    .tsc                                (tsc),                              //input [63:0]
    
     .idtr_limit                         (idtr_limit),                       //input [15:0]
     .idtr_base                          (idtr_base),                        //input [15:0]

@@ -447,3 +447,4 @@
 `define CMDEX_CALL_Ap_STEP_0 4'd3
 `define CMD_INVD 7'd9
 `define CMDEX_PUSH_immediate_se 4'd1
+`define CMD_RDTSC 7'd118
