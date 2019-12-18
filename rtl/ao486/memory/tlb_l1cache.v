@@ -26,7 +26,7 @@
 
 `include "defines.v"
 
-module tlb_regs(
+module tlb_l1cache(
     input               clk,
     input               rst_n,
     
@@ -42,14 +42,14 @@ module tlb_regs(
     input               rw,
     
     //RESP:
-    input               tlbregs_write_do,
-    input   [31:0]      tlbregs_write_linear,
-    input   [31:0]      tlbregs_write_physical,
+    input               tlbcache_write_do,
+    input   [31:0]      tlbcache_write_linear,
+    input   [31:0]      tlbcache_write_physical,
     
-    input               tlbregs_write_pwt,
-    input               tlbregs_write_pcd,
-    input               tlbregs_write_combined_rw,
-    input               tlbregs_write_combined_su,
+    input               tlbcache_write_pwt,
+    input               tlbcache_write_pcd,
+    input               tlbcache_write_combined_rw,
+    input               tlbcache_write_combined_su,
     //END
     
     //RESP:
@@ -376,38 +376,38 @@ assign tlb31_ena = tlb30_ena && tlb30[`TLB_BIT_VALID];
     
 assign full = tlb31_ena && tlb31[`TLB_BIT_VALID];
     
-assign tlb0_write  = tlbregs_write_do && ((~(tlb0[`TLB_BIT_VALID])  && tlb0_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) && ~(plru[7])  && ~(plru[15])));
-assign tlb1_write  = tlbregs_write_do && ((~(tlb1[`TLB_BIT_VALID])  && tlb1_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) && ~(plru[7])  &&  (plru[15])));
-assign tlb2_write  = tlbregs_write_do && ((~(tlb2[`TLB_BIT_VALID])  && tlb2_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) &&  (plru[7])  && ~(plru[16])));
-assign tlb3_write  = tlbregs_write_do && ((~(tlb3[`TLB_BIT_VALID])  && tlb3_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) &&  (plru[7])  &&  (plru[16])));
-assign tlb4_write  = tlbregs_write_do && ((~(tlb4[`TLB_BIT_VALID])  && tlb4_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) && ~(plru[8])  && ~(plru[17])));
-assign tlb5_write  = tlbregs_write_do && ((~(tlb5[`TLB_BIT_VALID])  && tlb5_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) && ~(plru[8])  &&  (plru[17])));
-assign tlb6_write  = tlbregs_write_do && ((~(tlb6[`TLB_BIT_VALID])  && tlb6_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) &&  (plru[8])  && ~(plru[18])));
-assign tlb7_write  = tlbregs_write_do && ((~(tlb7[`TLB_BIT_VALID])  && tlb7_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) &&  (plru[8])  &&  (plru[18])));
-assign tlb8_write  = tlbregs_write_do && ((~(tlb8[`TLB_BIT_VALID])  && tlb8_ena)  || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) && ~(plru[9])  && ~(plru[19])));
-assign tlb9_write  = tlbregs_write_do && ((~(tlb9[`TLB_BIT_VALID])  && tlb9_ena)  || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) && ~(plru[9])  &&  (plru[19])));
-assign tlb10_write = tlbregs_write_do && ((~(tlb10[`TLB_BIT_VALID]) && tlb10_ena) || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) &&  (plru[9])  && ~(plru[20])));
-assign tlb11_write = tlbregs_write_do && ((~(tlb11[`TLB_BIT_VALID]) && tlb11_ena) || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) &&  (plru[9])  &&  (plru[20])));
-assign tlb12_write = tlbregs_write_do && ((~(tlb12[`TLB_BIT_VALID]) && tlb12_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) && ~(plru[10]) && ~(plru[21])));
-assign tlb13_write = tlbregs_write_do && ((~(tlb13[`TLB_BIT_VALID]) && tlb13_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) && ~(plru[10]) &&  (plru[21])));
-assign tlb14_write = tlbregs_write_do && ((~(tlb14[`TLB_BIT_VALID]) && tlb14_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) &&  (plru[10]) && ~(plru[22])));
-assign tlb15_write = tlbregs_write_do && ((~(tlb15[`TLB_BIT_VALID]) && tlb15_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) &&  (plru[10]) &&  (plru[22])));
-assign tlb16_write = tlbregs_write_do && ((~(tlb16[`TLB_BIT_VALID]) && tlb16_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) && ~(plru[11]) && ~(plru[23])));
-assign tlb17_write = tlbregs_write_do && ((~(tlb17[`TLB_BIT_VALID]) && tlb17_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) && ~(plru[11]) &&  (plru[23])));
-assign tlb18_write = tlbregs_write_do && ((~(tlb18[`TLB_BIT_VALID]) && tlb18_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) &&  (plru[11]) && ~(plru[24])));
-assign tlb19_write = tlbregs_write_do && ((~(tlb19[`TLB_BIT_VALID]) && tlb19_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) &&  (plru[11]) &&  (plru[24])));
-assign tlb20_write = tlbregs_write_do && ((~(tlb20[`TLB_BIT_VALID]) && tlb20_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) && ~(plru[12]) && ~(plru[25])));
-assign tlb21_write = tlbregs_write_do && ((~(tlb21[`TLB_BIT_VALID]) && tlb21_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) && ~(plru[12]) &&  (plru[25])));
-assign tlb22_write = tlbregs_write_do && ((~(tlb22[`TLB_BIT_VALID]) && tlb22_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) &&  (plru[12]) && ~(plru[26])));
-assign tlb23_write = tlbregs_write_do && ((~(tlb23[`TLB_BIT_VALID]) && tlb23_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) &&  (plru[12]) &&  (plru[26])));
-assign tlb24_write = tlbregs_write_do && ((~(tlb24[`TLB_BIT_VALID]) && tlb24_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) && ~(plru[13]) && ~(plru[27])));
-assign tlb25_write = tlbregs_write_do && ((~(tlb25[`TLB_BIT_VALID]) && tlb25_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) && ~(plru[13]) &&  (plru[27])));
-assign tlb26_write = tlbregs_write_do && ((~(tlb26[`TLB_BIT_VALID]) && tlb26_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) &&  (plru[13]) && ~(plru[28])));
-assign tlb27_write = tlbregs_write_do && ((~(tlb27[`TLB_BIT_VALID]) && tlb27_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) &&  (plru[13]) &&  (plru[28])));
-assign tlb28_write = tlbregs_write_do && ((~(tlb28[`TLB_BIT_VALID]) && tlb28_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) && ~(plru[14]) && ~(plru[29])));
-assign tlb29_write = tlbregs_write_do && ((~(tlb29[`TLB_BIT_VALID]) && tlb29_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) && ~(plru[14]) &&  (plru[29])));
-assign tlb30_write = tlbregs_write_do && ((~(tlb30[`TLB_BIT_VALID]) && tlb30_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) &&  (plru[14]) && ~(plru[30])));
-assign tlb31_write = tlbregs_write_do && ((~(tlb31[`TLB_BIT_VALID]) && tlb31_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) &&  (plru[14]) &&  (plru[30])));
+assign tlb0_write  = tlbcache_write_do && ((~(tlb0[`TLB_BIT_VALID])  && tlb0_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) && ~(plru[7])  && ~(plru[15])));
+assign tlb1_write  = tlbcache_write_do && ((~(tlb1[`TLB_BIT_VALID])  && tlb1_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) && ~(plru[7])  &&  (plru[15])));
+assign tlb2_write  = tlbcache_write_do && ((~(tlb2[`TLB_BIT_VALID])  && tlb2_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) &&  (plru[7])  && ~(plru[16])));
+assign tlb3_write  = tlbcache_write_do && ((~(tlb3[`TLB_BIT_VALID])  && tlb3_ena)  || (full && ~(plru[0]) && ~(plru[1]) && ~(plru[3]) &&  (plru[7])  &&  (plru[16])));
+assign tlb4_write  = tlbcache_write_do && ((~(tlb4[`TLB_BIT_VALID])  && tlb4_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) && ~(plru[8])  && ~(plru[17])));
+assign tlb5_write  = tlbcache_write_do && ((~(tlb5[`TLB_BIT_VALID])  && tlb5_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) && ~(plru[8])  &&  (plru[17])));
+assign tlb6_write  = tlbcache_write_do && ((~(tlb6[`TLB_BIT_VALID])  && tlb6_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) &&  (plru[8])  && ~(plru[18])));
+assign tlb7_write  = tlbcache_write_do && ((~(tlb7[`TLB_BIT_VALID])  && tlb7_ena)  || (full && ~(plru[0]) && ~(plru[1]) &&  (plru[3]) &&  (plru[8])  &&  (plru[18])));
+assign tlb8_write  = tlbcache_write_do && ((~(tlb8[`TLB_BIT_VALID])  && tlb8_ena)  || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) && ~(plru[9])  && ~(plru[19])));
+assign tlb9_write  = tlbcache_write_do && ((~(tlb9[`TLB_BIT_VALID])  && tlb9_ena)  || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) && ~(plru[9])  &&  (plru[19])));
+assign tlb10_write = tlbcache_write_do && ((~(tlb10[`TLB_BIT_VALID]) && tlb10_ena) || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) &&  (plru[9])  && ~(plru[20])));
+assign tlb11_write = tlbcache_write_do && ((~(tlb11[`TLB_BIT_VALID]) && tlb11_ena) || (full && ~(plru[0]) &&  (plru[1]) && ~(plru[4]) &&  (plru[9])  &&  (plru[20])));
+assign tlb12_write = tlbcache_write_do && ((~(tlb12[`TLB_BIT_VALID]) && tlb12_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) && ~(plru[10]) && ~(plru[21])));
+assign tlb13_write = tlbcache_write_do && ((~(tlb13[`TLB_BIT_VALID]) && tlb13_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) && ~(plru[10]) &&  (plru[21])));
+assign tlb14_write = tlbcache_write_do && ((~(tlb14[`TLB_BIT_VALID]) && tlb14_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) &&  (plru[10]) && ~(plru[22])));
+assign tlb15_write = tlbcache_write_do && ((~(tlb15[`TLB_BIT_VALID]) && tlb15_ena) || (full && ~(plru[0]) &&  (plru[1]) &&  (plru[4]) &&  (plru[10]) &&  (plru[22])));
+assign tlb16_write = tlbcache_write_do && ((~(tlb16[`TLB_BIT_VALID]) && tlb16_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) && ~(plru[11]) && ~(plru[23])));
+assign tlb17_write = tlbcache_write_do && ((~(tlb17[`TLB_BIT_VALID]) && tlb17_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) && ~(plru[11]) &&  (plru[23])));
+assign tlb18_write = tlbcache_write_do && ((~(tlb18[`TLB_BIT_VALID]) && tlb18_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) &&  (plru[11]) && ~(plru[24])));
+assign tlb19_write = tlbcache_write_do && ((~(tlb19[`TLB_BIT_VALID]) && tlb19_ena) || (full &&  (plru[0]) && ~(plru[2]) && ~(plru[5]) &&  (plru[11]) &&  (plru[24])));
+assign tlb20_write = tlbcache_write_do && ((~(tlb20[`TLB_BIT_VALID]) && tlb20_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) && ~(plru[12]) && ~(plru[25])));
+assign tlb21_write = tlbcache_write_do && ((~(tlb21[`TLB_BIT_VALID]) && tlb21_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) && ~(plru[12]) &&  (plru[25])));
+assign tlb22_write = tlbcache_write_do && ((~(tlb22[`TLB_BIT_VALID]) && tlb22_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) &&  (plru[12]) && ~(plru[26])));
+assign tlb23_write = tlbcache_write_do && ((~(tlb23[`TLB_BIT_VALID]) && tlb23_ena) || (full &&  (plru[0]) && ~(plru[2]) &&  (plru[5]) &&  (plru[12]) &&  (plru[26])));
+assign tlb24_write = tlbcache_write_do && ((~(tlb24[`TLB_BIT_VALID]) && tlb24_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) && ~(plru[13]) && ~(plru[27])));
+assign tlb25_write = tlbcache_write_do && ((~(tlb25[`TLB_BIT_VALID]) && tlb25_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) && ~(plru[13]) &&  (plru[27])));
+assign tlb26_write = tlbcache_write_do && ((~(tlb26[`TLB_BIT_VALID]) && tlb26_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) &&  (plru[13]) && ~(plru[28])));
+assign tlb27_write = tlbcache_write_do && ((~(tlb27[`TLB_BIT_VALID]) && tlb27_ena) || (full &&  (plru[0]) &&  (plru[2]) && ~(plru[6]) &&  (plru[13]) &&  (plru[28])));
+assign tlb28_write = tlbcache_write_do && ((~(tlb28[`TLB_BIT_VALID]) && tlb28_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) && ~(plru[14]) && ~(plru[29])));
+assign tlb29_write = tlbcache_write_do && ((~(tlb29[`TLB_BIT_VALID]) && tlb29_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) && ~(plru[14]) &&  (plru[29])));
+assign tlb30_write = tlbcache_write_do && ((~(tlb30[`TLB_BIT_VALID]) && tlb30_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) &&  (plru[14]) && ~(plru[30])));
+assign tlb31_write = tlbcache_write_do && ((~(tlb31[`TLB_BIT_VALID]) && tlb31_ena) || (full &&  (plru[0]) &&  (plru[2]) &&  (plru[6]) &&  (plru[14]) &&  (plru[30])));
     
     
 assign tlb0_tlbflush  = (tlbflushsingle_do && tlbflushsingle_address[31:12] == tlb0[19:0])  || (translate_valid_but_not_dirty && tlb0_sel);
@@ -443,7 +443,7 @@ assign tlb29_tlbflush = (tlbflushsingle_do && tlbflushsingle_address[31:12] == t
 assign tlb30_tlbflush = (tlbflushsingle_do && tlbflushsingle_address[31:12] == tlb30[19:0]) || (translate_valid_but_not_dirty && tlb30_sel);
 assign tlb31_tlbflush = (tlbflushsingle_do && tlbflushsingle_address[31:12] == tlb31[19:0]) || (translate_valid_but_not_dirty && tlb31_sel);
     
-assign write_data = { rw, tlbregs_write_combined_su, tlbregs_write_combined_rw, 1'b1, tlbregs_write_pcd, tlbregs_write_pwt, tlbregs_write_physical[31:12], tlbregs_write_linear[31:12] };    
+assign write_data = { rw, tlbcache_write_combined_su, tlbcache_write_combined_rw, 1'b1, tlbcache_write_pcd, tlbcache_write_pwt, tlbcache_write_physical[31:12], tlbcache_write_linear[31:12] };    
 
 //------------------------------------------------------------------------------
 
@@ -630,7 +630,7 @@ always @(posedge clk) begin if(rst_n == 1'b0) tlb31 <= 46'd0; else if(tlbflushal
 //------------------------------------------------------------------------------
 
 // synthesis translate_off
-wire _unused_ok = &{ 1'b0, tlbflushsingle_address[11:0], tlbregs_write_linear[11:0], selected[19:0], tlbregs_write_physical[11:0], 1'b0 };
+wire _unused_ok = &{ 1'b0, tlbflushsingle_address[11:0], tlbcache_write_linear[11:0], selected[19:0], tlbcache_write_physical[11:0], 1'b0 };
 // synthesis translate_on
 
 //------------------------------------------------------------------------------
